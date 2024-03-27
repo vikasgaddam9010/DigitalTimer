@@ -8,6 +8,7 @@ class DigitalTimer extends Component {
     this.state = {
     isPlaying: true,
     isStarted: false,
+    sec: 0,
     timer: 25,
     stopWatch: 25,
   }
@@ -18,16 +19,36 @@ class DigitalTimer extends Component {
   
   onClikcToStart = () => {
     const {timer, stopWatch} = this.state
-    this.setState({isPlaying: false})
+    this.setState({isPlaying: false, sec: stopWatch*60})
     this.setState(prevState => ({isStarted: !prevState.isStarted}))
     this.timerId = setInterval(this.timerFunction, 1000)
   }
   clearTimerInterval = () => clearInterval(this.timerId)
   timerFunction = () => {
-    const {stopWatch} = this.state
-    console.log(stopWatch)
-    this.setState(prevState => ({stopWatch: prevState.stopWatch + 1}))
-    console.log('dsnkfskdjf')
+    const {stopWatch, sec} = this.state
+    this.setState(prevState =>({sec: prevState.sec - 1}))
+    const convertedtoMinuts = sec/60
+    const stringfied = String(convertedtoMinuts)
+    const splitted = stringfied.split(".") 
+    const minutes = "0."+String(splitted[1])
+    let time
+    if (sec%60 === 0){
+      time = splitted[0]+":00"
+      
+    }else{
+      const twoDecimal = minutes
+      
+      const floored = Math.round(twoDecimal*60)
+      if (floored > 9) {
+        time = splitted[0] + ":" + floored
+      }else{
+        time = splitted[0] + ":0" + floored
+      }
+      
+      
+    }
+    this.setState({stopWatch: time})
+    
   }
   onClikcToPlay = () => {
     const {timer, stopWatch} = this.state
@@ -42,9 +63,10 @@ class DigitalTimer extends Component {
       isPlaying: true,
       isStarted: false,
       timer: 25,
+      sec: 0,
       stopWatch: 25,
     })
-    componentWillUnmount()
+    this.componentWillUnmount()
   }
   onClickDe = () => {
     const {isStarted, timer} = this.state
@@ -62,13 +84,12 @@ class DigitalTimer extends Component {
   }
 
   render() {
-    const {isPlaying, timer, isStarted, stopWatch} = this.state
+    const {isPlaying, timer, sec, isStarted, stopWatch} = this.state
     const isPlayOrPauseImage = isStarted
       ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
       : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
     const isTimerStatus = isStarted ? 'Running' : 'Paused'
     const startOrPauseAltText = isStarted ? 'pause icon' : 'play icon'
-
     return (
       <div className="bg-container">
         <h1>Digital Timer</h1>
