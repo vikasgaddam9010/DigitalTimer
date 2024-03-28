@@ -14,16 +14,16 @@ class DigitalTimer extends Component {
   }
   onClikcToStart = () => {
     const {timer, stopWatch} = this.state
-    let stopWatchMinutes 
+    let stopWatchMinutes
     const againSplitted = stopWatch.split(':')
-    if(againSplitted[1] > 0){
-      let totalSeconds = parseInt(againSplitted[0]*60) + parseInt(againSplitted[1])
+    if (againSplitted[1] > 0) {
+      let totalSeconds =
+        parseInt(againSplitted[0] * 60) + parseInt(againSplitted[1])
       stopWatchMinutes = totalSeconds
-      
-    }else{
-      stopWatchMinutes = againSplitted[0]*60
+    } else {
+      stopWatchMinutes = againSplitted[0] * 60
     }
-    
+
     this.setState({isPlaying: false, sec: stopWatchMinutes})
     this.setState(prevState => ({isStarted: !prevState.isStarted}))
     this.timerId = setInterval(this.timerFunction, 100)
@@ -42,24 +42,22 @@ class DigitalTimer extends Component {
     let time
     if (sec > 0) {
       if (sec % 60 === 0 && sec > 0) {
-        time = minutes + ':00'       
-        
+        time = minutes + ':00'
       } else {
         const twoDecimal = seconds
         const floored = Math.round(twoDecimal * 60)
         if (floored > 9) {
-          if(minutes > 9){
+          if (minutes > 9) {
             time = minutes + ':' + floored
-          }else{
+          } else {
             time = `0${minutes}:${floored}`
           }
-          
         } else {
-          if(minutes < 10){
-            time = "0"+minutes + ':0' + floored
-          }else if (floored<10){
+          if (minutes < 10) {
+            time = '0' + minutes + ':0' + floored
+          } else if (floored < 10) {
             time = `${minutes}:0${floored}`
-          }else{
+          } else {
             time = `${minutes}:${floored}`
           }
         }
@@ -89,9 +87,9 @@ class DigitalTimer extends Component {
     if (isStarted === false && timer > 1) {
       this.setState(prevState => ({timer: prevState.timer - 1}))
       let settime
-      if (timer -2 < 9){
+      if (timer - 2 < 9) {
         settime = `0${timer - 1}:00`
-      }else{
+      } else {
         settime = `${timer - 1}:00`
       }
       this.setState({stopWatch: settime})
@@ -102,9 +100,9 @@ class DigitalTimer extends Component {
     if (isStarted === false) {
       this.setState(prevState => ({timer: prevState.timer + 1}))
       let settime
-      if (timer < 9){
+      if (timer < 9) {
         settime = `0${timer + 1}:00`
-      }else{
+      } else {
         settime = `${timer + 1}:00`
       }
       this.setState({stopWatch: settime})
@@ -136,11 +134,8 @@ class DigitalTimer extends Component {
               <div className="play-pause">
                 <div>
                   {
-                    <button alt={imgAlt}
-                     onClick={btnFunction}
-                     className="btn">
-                      <img src={buttonImag} />
-                      <p>{imgAlt}</p>
+                    <button onClick={btnFunction} className="btn">
+                      <img alt={imgAlt} src={buttonImag} />
                       <h1>{headText}</h1>
                     </button>
                   }
