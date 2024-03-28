@@ -89,6 +89,9 @@ img {
   border: 0px solid;
   display: flex;
   justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bold;
   margin-left: 15px;
 }
 .btn {
